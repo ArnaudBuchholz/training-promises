@@ -1,0 +1,26 @@
+{
+  "name": "training-promises",
+  "version": "1.0.0",
+  "description": "A way to learn more about promises",
+  "main": "index.js",
+  "scripts": {
+    "start": "reserve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArnaudBuchholz/training-promises.git"
+  },
+  "keywords": [
+    "training",
+    "promises"
+  ],
+  "author": "Arnaud Buchholz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArnaudBuchholz/training-promises/issues"
+  },
+  "homepage": "https://github.com/ArnaudBuchholz/training-promises#readme",
+  "devDependencies": {
+    "reserve": "^1.15.0"
+  }
+}
