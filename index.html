@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+.tr0 {
+  fill: rgb(216, 216, 216);
+  stroke: rgb(0, 0, 0);
+}
+
+.tr1 {
+  fill: rgb(216, 216, 216);
+  stroke: rgb(0, 0, 0);
+}
+
+.tr2 {
+  fill: rgb(216, 216, 216);
+  stroke: rgb(0, 0, 0);
+}
+    </style>
+  </head>
+  <body>
+    <h1>Title</h1>
+    <svg id="preview" width="100%" height="150px" viewBox="0 0 1024 190">
+<!--
+      <rect x="0" y="0" width="1024" height="200" style="fill: rgb(100, 100, 100);"></rect>
+      <rect x="20" y="20" width="500" height="50" class="tr0"></rect>
+      <text x="40" y="50" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 30px;" >action 1</text>
+      <text x="500" y="50" style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 30px;" >✔️</text>
+-->      
+    </svg>
+    <h1>After</h1>
+    <script>
+        const SVG = 'http://www.w3.org/2000/svg'
+
+        let start
+
+        const wrap = (action, id) => () => {
+          if (0 === id) {
+            start = Date.now()
+          }
+          console.log('start', id, Date.now() - start)
+          const rect = document.getElementById('preview').appendChild(document.createElementNS(SVG, 'rect'))
+          rect.setAttribute('x', 20 + Date.now() - start)
+          rect.setAttribute('y', 20 + id * 50)
+          rect.setAttribute('height', 40)
+          rect.setAttribute('width', 500)
+          rect.className = `tr${id}`
+
+          function end (status) {
+            const len = Date.now() - start
+            rect.setAttribute('width', len)
+            console.log('end', id, len, status)
+            
+          }
+
+          return Promise.resolve(action())
+            .then(result => {
+              end('✔️')
+              return result
+            }, reason => {
+              end('⚠️')
+              return Promise.reject(reason)
+            })
+        }
+        const genSuccess = (delay, result) => () => new Promise(resolve => setTimeout(() => resolve(result), delay))
+        const genFailure = (delay, result) => () => new Promise((_, reject) => setTimeout(() => reject(result), delay))
+
+        const action1 = wrap(genSuccess(500, 'OK'), 1)
+        const action2 = wrap(genFailure(250, 'KO'), 2)
+
+        const solution = function () {
+          return Promise.all([
+            action1(),
+            action2()
+          ])
+        }
+
+        wrap(solution, 0)()
+    </script>
+  </body>
+</html>
