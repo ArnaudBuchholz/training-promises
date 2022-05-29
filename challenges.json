@@ -1,0 +1,9 @@
+[{
+  "title": "Sequencing actions",
+  "description": "Write a function that receives two functions. They might be asynchronous or not. The goal is to chain the two calls, one after the other.",
+  "signature": "action1, action2",
+  "tests": [{
+    "args": ["ok:100", "ok:100"],
+    "expect": ""
+  }]
+}]
